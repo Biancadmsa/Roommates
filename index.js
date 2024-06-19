@@ -17,11 +17,11 @@ const server = http.createServer((req, res) => {
                 res.end('File not found');
             }
         } catch (err) {
-            console.error('Error reading index.html:', err);
+            console.error('Error leyendo index.html:', err);
             res.statusCode = 500;
-            res.end('Server error');
+            res.end('Error del servidor');
         }
-        return; // End the request handling here for "/"
+        return; // Termina el manejo de la solicitud para "/"
     }
   
     if(req.url.startsWith('/roommate') && req.method === 'POST') {
@@ -34,14 +34,14 @@ const server = http.createServer((req, res) => {
             res.end();
             console.log("Error en el registro", e);
         });
-        return; // finaliza "/roommate POST"
+        return; // Termina "/roommate POST"
     }
 
     if(req.url.startsWith('/roommate') && req.method === 'GET') {
         const roommatesJSON = JSON.parse(fs.readFileSync("roommates.json", "utf8"));
         res.setHeader("Content-Type", "application/json");
         res.end(JSON.stringify(roommatesJSON));
-        return; // End the request handling for "/roommate GET"
+        return; // Termina el manejo de la solicitud para "/roommate GET"
     }
 
     // Manejo de la API REST para gastos--------------------------------//
@@ -52,7 +52,7 @@ const server = http.createServer((req, res) => {
     if(req.url.startsWith('/gastos') && req.method === 'GET') {
         res.setHeader("Content-Type", "application/json");
         res.end(JSON.stringify(gastosJSON, null, 1));
-        return; // End the request handling for "/gastos GET"
+        return; // Termina el manejo de la solicitud para "/gastos GET"
     }
 
     // b. POST /gasto:
@@ -69,7 +69,7 @@ const server = http.createServer((req, res) => {
 
                 // Validar que la descripción contenga al menos una letra
                 if (!/[a-zA-Z]/.test(descripcion)) {
-                    res.statusCode = 400; // Bad Request
+                    res.statusCode = 400; // Solicitud incorrecta
                     res.end('La descripción debe incluir al menos una letra.');
                     return;
                 }
@@ -86,14 +86,14 @@ const server = http.createServer((req, res) => {
                 fs.writeFileSync('./gastos.json', JSON.stringify(gastosJSON, null, 2));
                 
                 res.end('Gasto registrado con éxito');
-                console.log('El Gasto ha sido registrado con éxito!');
+                console.log('¡El Gasto ha sido registrado con éxito!');
             } catch (error) {
-                res.statusCode = 500; // Internal Server Error
+                res.statusCode = 500; // Error interno del servidor
                 res.end('Error interno al procesar la solicitud');
-                console.error('Error processing POST /gasto:', error);
+                console.error('Error procesando POST /gasto:', error);
             }
         });
-        return; // End the request handling for "/gasto POST"
+        return; // Termina el manejo de la solicitud para "/gasto POST"
     }
 
     // c. PUT /gasto:
@@ -112,7 +112,7 @@ const server = http.createServer((req, res) => {
 
                 // Validar que la descripción contenga al menos una letra
                 if (!/[a-zA-Z]/.test(descripcion)) {
-                    res.statusCode = 400; // Bad Request
+                    res.statusCode = 400; // Solicitud incorrecta
                     res.end('La descripción debe incluir al menos una letra.');
                     return;
                 }
@@ -129,12 +129,12 @@ const server = http.createServer((req, res) => {
                 fs.writeFileSync('./gastos.json', JSON.stringify(gastosJSON, null, 2));
                 res.end('Gasto actualizado con éxito');
             } catch (error) {
-                res.statusCode = 500; // Internal Server Error
+                res.statusCode = 500; // Error interno del servidor
                 res.end('Error interno al procesar la solicitud');
-                console.error('Error processing PUT /gasto:', error);
+                console.error('Error procesando PUT /gasto:', error);
             }
         });
-        return; // End the request handling for "/gasto PUT"
+        return; // Termina el manejo de la solicitud para "/gasto PUT"
     }
 
     // d. DELETE /gasto:
@@ -144,8 +144,8 @@ const server = http.createServer((req, res) => {
         fs.writeFileSync('./gastos.json', JSON.stringify(gastosJSON, null, 2));
         
         res.end('Gasto eliminado con éxito');
-        console.log('Se eliminó el Gasto del historial con éxito!');
-        return; // End the request handling for "/gasto DELETE"
+        console.log('¡Se eliminó el Gasto del historial con éxito!');
+        return; // Termina el manejo de la solicitud para "/gasto DELETE"
     }
 
     // Si se llega aquí, ninguna ruta coincide

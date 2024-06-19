@@ -17,6 +17,12 @@
       "descripcion": "CLORO",
       "monto": 45454,
       "id": "d462532f"
+    },
+    {
+      "roommate": "MS TESSA JOLY",
+      "descripcion": "PAPEL",
+      "monto": 356,
+      "id": "9e0b492b"
     }
   ]
 }
