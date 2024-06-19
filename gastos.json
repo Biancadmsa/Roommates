@@ -1,0 +1,22 @@
+{
+  "gastos": [
+    {
+      "roommate": "VIOLET TURNER",
+      "descripcion": "CLORO",
+      "monto": 34,
+      "id": "90572f11"
+    },
+    {
+      "roommate": "MR مهراد احمدی",
+      "descripcion": "CLORO",
+      "monto": 4565,
+      "id": "6cd428f1"
+    },
+    {
+      "roommate": "MR مهراد احمدی",
+      "descripcion": "CLORO",
+      "monto": 45454,
+      "id": "d462532f"
+    }
+  ]
+}

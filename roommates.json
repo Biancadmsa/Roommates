@@ -1,0 +1,32 @@
+{
+ "roommates": [
+  {
+   "id": "375892",
+   "nombre": "Violet Turner",
+   "correo": "violet.turner@example.com",
+   "debe": "-13500",
+   "recibe": "6000"
+  },
+  {
+   "id": "dc012ac5-2437-40a9-a6c0-a5c9721d18d6",
+   "nombre": "Mr Philip Park",
+   "correo": "philip.park@example.com",
+   "debe": "-9000",
+   "recibe": "12000"
+  },
+  {
+   "id": "71e4b1",
+   "nombre": "Mr مهراد احمدی",
+   "correo": "mhrd.hmdy@example.com",
+   "debe": "-10500",
+   "recibe": "15000"
+  },
+  {
+   "id": "c5a947",
+   "nombre": "Ms Johanne Poulsen",
+   "correo": "johanne.poulsen@example.com",
+   "debe": "-6000",
+   "recibe": "12000"
+  }
+ ]
+}
