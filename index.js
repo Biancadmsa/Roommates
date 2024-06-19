@@ -6,7 +6,7 @@ const { agregaRoommate, guardarRoommate } = require("./usuarios");
 
 // Creación del servidor HTTP
 const server = http.createServer((req, res) => {
-    if(req.url == "/" && req.method === "GET") {
+    if (req.url == "/" && req.method === "GET") {
         try {
             const indexPath = './index.html'; // Ruta correcta al archivo index.html
             if (fs.existsSync(indexPath)) {
@@ -14,7 +14,7 @@ const server = http.createServer((req, res) => {
                 res.end(fs.readFileSync(indexPath, "utf8"));
             } else {
                 res.statusCode = 404;
-                res.end('File not found');
+                res.end('Archivo no encontrado');
             }
         } catch (err) {
             console.error('Error leyendo index.html:', err);
@@ -23,8 +23,8 @@ const server = http.createServer((req, res) => {
         }
         return; // Termina el manejo de la solicitud para "/"
     }
-  
-    if(req.url.startsWith('/roommate') && req.method === 'POST') {
+
+    if (req.url.startsWith('/roommate') && req.method === 'POST') {
         agregaRoommate().then(async (roommate) => {
             guardarRoommate(roommate);
             res.setHeader("Content-Type", "application/json");
@@ -37,7 +37,7 @@ const server = http.createServer((req, res) => {
         return; // Termina "/roommate POST"
     }
 
-    if(req.url.startsWith('/roommate') && req.method === 'GET') {
+    if (req.url.startsWith('/roommate') && req.method === 'GET') {
         const roommatesJSON = JSON.parse(fs.readFileSync("roommates.json", "utf8"));
         res.setHeader("Content-Type", "application/json");
         res.end(JSON.stringify(roommatesJSON));
@@ -47,25 +47,25 @@ const server = http.createServer((req, res) => {
     // Manejo de la API REST para gastos--------------------------------//
     let gastosJSON = JSON.parse(fs.readFileSync('./gastos.json', 'utf8'));
     let gastos = gastosJSON.gastos || [];
-    
+
     // a. GET /gastos:
-    if(req.url.startsWith('/gastos') && req.method === 'GET') {
+    if (req.url.startsWith('/gastos') && req.method === 'GET') {
         res.setHeader("Content-Type", "application/json");
         res.end(JSON.stringify(gastosJSON, null, 1));
         return; // Termina el manejo de la solicitud para "/gastos GET"
     }
 
     // b. POST /gasto:
-    if(req.url.startsWith('/gasto') && req.method === 'POST') {
+    if (req.url.startsWith('/gasto') && req.method === 'POST') {
         let body = '';
-        req.on('data', (payload) => {
-            body += payload.toString();
+        req.on('data', (chunk) => {
+            body += chunk.toString(); // Acumula los datos del cuerpo de la solicitud
         });
 
         req.on('end', () => {
             try {
-                const bodyObj = JSON.parse(body);
-                const descripcion = bodyObj.descripcion.trim(); // Limpiar y obtener la descripción
+                const bodyObj = JSON.parse(body); // Convierte los datos del cuerpo a un objeto JavaScript
+                const descripcion = bodyObj.descripcion.trim(); // Limpia y obtiene la descripción
 
                 // Validar que la descripción contenga al menos una letra
                 if (!/[a-zA-Z]/.test(descripcion)) {
@@ -84,7 +84,7 @@ const server = http.createServer((req, res) => {
                 gastos.push(gasto);
                 gastosJSON.gastos = gastos;
                 fs.writeFileSync('./gastos.json', JSON.stringify(gastosJSON, null, 2));
-                
+
                 res.end('Gasto registrado con éxito');
                 console.log('¡El Gasto ha sido registrado con éxito!');
             } catch (error) {
@@ -97,18 +97,18 @@ const server = http.createServer((req, res) => {
     }
 
     // c. PUT /gasto:
-    if(req.url.startsWith('/gasto') && req.method === 'PUT') {
+    if (req.url.startsWith('/gasto') && req.method === 'PUT') {
         let body = '';
         const { id } = url.parse(req.url, true).query;
 
-        req.on('data', (payload) => {
-            body += payload.toString();
+        req.on('data', (chunk) => {
+            body += chunk.toString(); // Acumula los datos del cuerpo de la solicitud
         });
 
         req.on('end', () => {
             try {
-                const bodyObj = JSON.parse(body);
-                const descripcion = bodyObj.descripcion.trim(); // Limpiar y obtener la descripción
+                const bodyObj = JSON.parse(body); // Convierte los datos del cuerpo a un objeto JavaScript
+                const descripcion = bodyObj.descripcion.trim(); // Limpia y obtiene la descripción
 
                 // Validar que la descripción contenga al menos una letra
                 if (!/[a-zA-Z]/.test(descripcion)) {
@@ -125,7 +125,7 @@ const server = http.createServer((req, res) => {
                     }
                     return g;
                 });
-                
+
                 fs.writeFileSync('./gastos.json', JSON.stringify(gastosJSON, null, 2));
                 res.end('Gasto actualizado con éxito');
             } catch (error) {
@@ -138,11 +138,11 @@ const server = http.createServer((req, res) => {
     }
 
     // d. DELETE /gasto:
-    if(req.url.startsWith('/gasto') && req.method === 'DELETE') {
+    if (req.url.startsWith('/gasto') && req.method === 'DELETE') {
         const { id } = url.parse(req.url, true).query;
         gastosJSON.gastos = gastos.filter((g) => g.id !== id);
         fs.writeFileSync('./gastos.json', JSON.stringify(gastosJSON, null, 2));
-        
+
         res.end('Gasto eliminado con éxito');
         console.log('¡Se eliminó el Gasto del historial con éxito!');
         return; // Termina el manejo de la solicitud para "/gasto DELETE"

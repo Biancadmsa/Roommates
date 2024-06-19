@@ -111,6 +111,13 @@
    "correo": "bruce.washington@example.com",
    "debe": "-12000",
    "recibe": "15000"
+  },
+  {
+   "id": "04eca7",
+   "nombre": "Miss Erna Adolph",
+   "correo": "erna.adolph@example.com",
+   "debe": "-9000",
+   "recibe": "9000"
   }
  ]
 }

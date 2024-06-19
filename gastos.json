@@ -23,6 +23,12 @@
       "descripcion": "PAPEL",
       "monto": 356,
       "id": "9e0b492b"
+    },
+    {
+      "roommate": "MR TRISTAN THOMSEN",
+      "descripcion": "DENTAL",
+      "monto": 45600,
+      "id": "47434301"
     }
   ]
 }
